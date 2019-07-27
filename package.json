@@ -1,6 +1,6 @@
 {
   "name": "makesingleton",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "make a singleton",
   "main": "index.js",
   "scripts": {
