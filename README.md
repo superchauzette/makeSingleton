@@ -1,6 +1,7 @@
 # makeSingleton
 
-allow you to make a single instance of your function or class
+allow you to make a single instance of your function or class.
+It's a good practice to instanciate for module when you call it instead of instanciate when you import it.
 
 ```js
 function makeSingleton(createInstance) {
@@ -17,48 +18,47 @@ function makeSingleton(createInstance) {
 
 ## How to use
 
+Bad Practice
+
+```js
+// logger.js
+module.exports = createLogger("my-api-name");
+
+// in other file
+const logger = require("./logger.js"); // create instance of logger
+
+function main() {
+  logger.log("hello world");
+  logger.log("hello world 2"); // same instance of logger
+}
+```
+
+Good Practice Practice
+
+```js
+// logger.js
+module.exports = () => createLogger("my-api-name");
+
+// in other file
+const logger = require("./logger.js"); // no instance created - no side effect on import :)
+
+function main() {
+  logger().log("hello world"); // create instance of logger
+  logger().log("hello world 2"); // create a other instance of logger
+}
+```
+
+Best Practice Practice
+
 ```js
 // logger.js
 module.exports = makeSingleton(() => createLogger("my-api-name"));
 
 // in other file
-const logger = require("./logger.js");
+const logger = require("./logger.js"); // no instance created - no side effect on import :)
 
 function main() {
-  logger().log("hello world");
+  logger().log("hello world"); // create instance of logger
+  logger().log("hello world 2"); // same instance of logger
 }
-```
-
-```js
-// apiClient.js
-module.exports = makeSingleton(() => createApiClient());
-
-// in other file
-const apiClient = require("./apiClient.js");
-
-async function main() {
-  const infosUsers = await apiClient().users.getInfos();
-}
-```
-
-```js
-// redis.js
-module.exports = makeSingleton(() => createRedis({
-  host: String(process.env.REDIS_HOSTS),
-  password: String(process.env.REDIS_PASSWORD)
- });
-);
-
-
-// in other file
-const redis = require("./redis.js");
-
-async function main() {
-    await redis().set('myKey', { hello: "world" });
-    const myKey = await redis().get('myKey');
-}
-
-
-
-
 ```
