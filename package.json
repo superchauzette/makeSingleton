@@ -1,13 +1,20 @@
 {
   "name": "makesingleton",
   "version": "1.0.0",
-  "description": "",
+  "description": "make a singleton",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superchauzette/makeSingleton"
+  },
   "author": "Kevin Tillot",
+  "contributors": [
+    " Christophe ROSSET"
+  ],
   "license": "ISC",
   "types": "index.d.ts",
   "dependencies": {
